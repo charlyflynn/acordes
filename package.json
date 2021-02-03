@@ -1,0 +1,19 @@
+{
+  "name": "acordes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:server": "cd react-app && yarn run build && cd ../server && yarn start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phlye/acordes.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phlye/acordes/issues"
+  },
+  "homepage": "https://github.com/phlye/acordes#readme"
+}
