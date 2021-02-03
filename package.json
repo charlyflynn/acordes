@@ -6,5 +6,8 @@
   "author": "Charlie Flynn",
   "license": "MIT",
   "workspaces": ["app", "server"],
-  "private": true
+  "private": true,
+  "scripts": {
+    "start": "cd app && yarn build && cd ../server && yarn start"
+  }
 }
