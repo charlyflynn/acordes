@@ -15,5 +15,7 @@
   "bugs": {
     "url": "https://github.com/phlye/acordes/issues"
   },
-  "homepage": "https://github.com/phlye/acordes#readme"
+  "homepage": "https://github.com/phlye/acordes#readme",
+  "private": true,
+  "workspaces": ["react-app", "server"]
 }
