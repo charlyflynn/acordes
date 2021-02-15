@@ -8,6 +8,7 @@
   "workspaces": ["app", "server"],
   "private": true,
   "scripts": {
-    "start": "cd app && yarn build && cd ../server && yarn start"
+    "start": "cd app && yarn build && cd ../server && yarn start",
+    "build": "cd client && yarn build"
   }
 }
