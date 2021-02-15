@@ -55,6 +55,7 @@ const View = () => {
 
   React.useEffect(() => {
     navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [target, setTarget] = React.useState("n/a");
