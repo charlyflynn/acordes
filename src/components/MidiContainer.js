@@ -39,8 +39,8 @@ const activeNotesDefault = [...Array(127).fill(false)];
 
 const View = () => {
   const [activeNotes, setactiveNotes] = React.useState(activeNotesDefault);
-  const [startingOctave, setstartingOctave] = React.useState(3);
-  const [totalOctaves, settotalOctaves] = React.useState(3);
+  const [startingOctave] = React.useState(3);
+  const [totalOctaves] = React.useState(3);
   const onMIDISuccess = (access) => {
     if (access.inputs.size > 0) setmidiState(true);
     else setmidiState(false);
