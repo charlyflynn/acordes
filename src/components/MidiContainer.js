@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Keyboard from "./Keyboard";
-import Readout from "./Readout";
+import Text from "./Text";
+import VerticalStack from "./VerticalStack";
 
 const Container = styled.div`
   display: flex;
@@ -15,6 +16,17 @@ const Container = styled.div`
   background-color: #282c34;
 `;
 
+const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: space-between;
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid ivory;
+  padding: 24px;
+`;
+
 const activeNotesDefault = {};
 
 [...Array(127).keys()].reduce((item) =>
@@ -23,6 +35,8 @@ const activeNotesDefault = {};
 
 const View = () => {
   const [activeNotes, setactiveNotes] = React.useState(activeNotesDefault);
+  const [startingOctave, setstartingOctave] = React.useState(3);
+  const [totalOctaves, settotalOctaves] = React.useState(3);
   const onMIDISuccess = (access) => {
     if (access.inputs.size > 0) setmidiState(true);
     else setmidiState(false);
@@ -64,11 +78,26 @@ const View = () => {
 
   return (
     <Container>
-      <Readout>
-        {midiState ? "external device connected" : "external device not found"}
-      </Readout>
-      <Readout large>{target}</Readout>
-      <Keyboard setTarget={setTarget} activeNotes={activeNotes} octaves={4} />
+      <Header>
+        <VerticalStack>
+          <Text small colour={midiState ? "lightgreen" : "goldenrod"}>
+            {midiState
+              ? "external device connected"
+              : "external device not found"}
+          </Text>
+        </VerticalStack>
+        <VerticalStack>
+          <Text small>Starting Octave: {startingOctave}</Text>
+          <Text small>Total Octaves: {totalOctaves}</Text>
+        </VerticalStack>
+      </Header>
+      <Text large>{target}</Text>
+      <Keyboard
+        setTarget={setTarget}
+        activeNotes={activeNotes}
+        startingOctave={startingOctave}
+        totalOctaves={totalOctaves}
+      />
     </Container>
   );
 };
