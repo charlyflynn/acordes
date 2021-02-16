@@ -1,14 +1,14 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const Text = styled.p`
-  font-size: 52px;
+  font-size: ${({ large }) => (large ? "52px" : "24px")};
   font-weight: bold;
-  color: white;
+  color: ivory;
 `;
 
-const Readout = ({ children }) => {
-  return <Text>{children}</Text>
-}
+const Readout = ({ children, large = false }) => {
+  return <Text large={large}>{children}</Text>;
+};
 
-export default Readout
+export default Readout;

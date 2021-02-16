@@ -1,9 +1,9 @@
-import View from "./components/View";
+import MidiContainer from "./components/MidiContainer";
 
 function App() {
   return (
     <div className="App">
-      <View />
+      <MidiContainer />
     </div>
   );
 }
