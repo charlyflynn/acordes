@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Keyboard from "./Keyboard";
 import Text from "./Text";
 import VerticalStack from "./VerticalStack";
+import KeyValueTable from "./KeyValueTable";
+import * as fn from "../functions";
 
 const Container = styled.div`
   display: flex;
@@ -27,11 +29,13 @@ const Header = styled.div`
   padding: 24px;
 `;
 
-const activeNotesDefault = {};
+// const activeNotesDefault = {};
 
-[...Array(127).keys()].reduce((item) =>
-  Object.assign(activeNotesDefault, { [item]: false })
-);
+// [...Array(127).keys()].reduce((item) =>
+//   Object.assign(activeNotesDefault, { [item]: false })
+// );
+
+const activeNotesDefault = [...Array(127).fill(false)];
 
 const View = () => {
   const [activeNotes, setactiveNotes] = React.useState(activeNotesDefault);
@@ -55,16 +59,20 @@ const View = () => {
   const getMIDIMessage = (midiMessage, currentNotes) => {
     const [midiCmd, noteID, velocity] = midiMessage.data;
     if (midiCmd === 144 && velocity > 0) {
-      setactiveNotes({ ...activeNotes, [noteID]: true });
+      setactiveNotes([
+        ...activeNotes.slice(0, noteID),
+        true,
+        ...activeNotes.slice(noteID, activeNotes.length),
+      ]);
       // activeNotes.current[noteID] = true;
     } else if (midiCmd === 128 || velocity === 0) {
-      setactiveNotes({ ...activeNotes, [noteID]: false }, () =>
-        console.log(activeNotes[noteID])
-      );
+      setactiveNotes([
+        ...activeNotes.slice(0, noteID),
+        false,
+        ...activeNotes.slice(noteID, activeNotes.length),
+      ]);
       // activeNotes.current[noteID] = false;
     }
-    console.log(midiMessage.data);
-    console.log(activeNotes[noteID]);
   };
 
   React.useEffect(() => {
@@ -76,22 +84,60 @@ const View = () => {
 
   const [midiState, setmidiState] = React.useState(false);
 
+  const activeNotesReal = fn.extractNotes(activeNotes);
+
   return (
     <Container>
       <Header>
         <VerticalStack>
           <Text small colour={midiState ? "lightgreen" : "goldenrod"}>
             {midiState
-              ? "external device connected"
+              ? "external devices connected:"
               : "external device not found"}
           </Text>
+          <Text>{false && "no devices"}</Text>
         </VerticalStack>
         <VerticalStack>
           <Text small>Starting Octave: {startingOctave}</Text>
           <Text small>Total Octaves: {totalOctaves}</Text>
         </VerticalStack>
       </Header>
-      <Text large>{target}</Text>
+      <VerticalStack>
+        <KeyValueTable>
+          {[
+            { name: "Target Midi Id", value: target },
+            { name: "Target Note", value: fn.convertMidiIdToNote(target) },
+            {
+              name: "Selected Notes (Midi)",
+              value:
+                activeNotesReal.length > 0 ? activeNotesReal.toString() : "n/a",
+            },
+            {
+              name: "Selected Notes",
+              value:
+                activeNotesReal.length > 0
+                  ? activeNotesReal
+                      .map((item) => fn.convertMidiIdToNote(item))
+                      .toString()
+                  : "n/a",
+            },
+            {
+              name: "Intervallic Distances",
+              value:
+                activeNotesReal.length > 1
+                  ? fn.extractDistances(fn.extractNotes(activeNotes)).toString()
+                  : "n/a",
+            },
+            {
+              name: "Root Note",
+              value:
+                activeNotesReal.length > 0
+                  ? fn.convertMidiIdToNote(fn.extractRoot(activeNotesReal)[0])
+                  : "n/a",
+            },
+          ]}
+        </KeyValueTable>
+      </VerticalStack>
       <Keyboard
         setTarget={setTarget}
         activeNotes={activeNotes}
