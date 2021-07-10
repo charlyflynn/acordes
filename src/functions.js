@@ -13,10 +13,30 @@ const noteNames = [
   "B",
 ];
 
+const noteNames2 = [
+  ["C"],
+  ["C#", "Db"],
+  ["D"],
+  ["D#", "Eb"],
+  ["E"],
+  ["F"],
+  ["F#", "Gb"],
+  ["G"],
+  ["G#", "Ab"],
+  ["A"],
+  ["A#", "Bb"],
+  ["B"],
+];
+
 export const convertMidiIdToNote = (midiId) => {
   const octave = Math.trunc(midiId / 12);
   const noteName = noteNames[midiId % 12];
+
   return typeof midiId === "number" ? `${noteName}${octave}` : "n/a";
+};
+
+export const convertMidiIdToNoteName = (midiId) => {
+  return typeof midiId === "number" ? noteNames2[midiId % 12][0] : "";
 };
 
 export const extractNotes = (noteArray) => {

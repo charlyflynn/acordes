@@ -1,10 +1,11 @@
+import { detect } from "@tonaljs/chord-detect";
 import React from "react";
 import styled from "styled-components";
+import * as fn from "../functions";
 import Keyboard from "./Keyboard";
+import KeyValueTable from "./KeyValueTable";
 import Text from "./Text";
 import VerticalStack from "./VerticalStack";
-import KeyValueTable from "./KeyValueTable";
-import * as fn from "../functions";
 
 const Container = styled.div`
   display: flex;
@@ -119,6 +120,17 @@ const View = () => {
                   ? activeNotesReal
                       .map((item) => fn.convertMidiIdToNote(item))
                       .toString()
+                  : "n/a",
+            },
+            {
+              name: "Chord possibilities",
+              value:
+                activeNotesReal.length > 2
+                  ? detect(
+                      activeNotesReal.map((item) => {
+                        return fn.convertMidiIdToNoteName(item);
+                      })
+                    ).toString()
                   : "n/a",
             },
             {
