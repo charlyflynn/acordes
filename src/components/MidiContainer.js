@@ -2,8 +2,9 @@ import { detect } from "@tonaljs/chord-detect";
 import React from "react";
 import styled from "styled-components";
 import * as fn from "../functions";
+import ChordReadout from "./ChordReadout";
 import Keyboard from "./Keyboard";
-import KeyValueTable from "./KeyValueTable";
+import Settings from "./Settings";
 import Text from "./Text";
 import VerticalStack from "./VerticalStack";
 
@@ -29,12 +30,6 @@ const Header = styled.div`
   border-bottom: 1px solid ivory;
   padding: 24px;
 `;
-
-// const activeNotesDefault = {};
-
-// [...Array(127).keys()].reduce((item) =>
-//   Object.assign(activeNotesDefault, { [item]: false })
-// );
 
 const activeNotesDefault = [...Array(127).fill(false)];
 
@@ -98,57 +93,19 @@ const View = () => {
           </Text>
           <Text>{false && "no devices"}</Text>
         </VerticalStack>
-        <VerticalStack>
-          <Text small>Starting Octave: {startingOctave}</Text>
-          <Text small>Total Octaves: {totalOctaves}</Text>
-        </VerticalStack>
+        <Settings settings={{ startingOctave, totalOctaves }} />
       </Header>
       <VerticalStack>
-        <KeyValueTable>
-          {[
-            { name: "Target Midi Id", value: target },
-            { name: "Target Note", value: fn.convertMidiIdToNote(target) },
-            {
-              name: "Selected Notes (Midi)",
-              value:
-                activeNotesReal.length > 0 ? activeNotesReal.toString() : "n/a",
-            },
-            {
-              name: "Selected Notes",
-              value:
-                activeNotesReal.length > 0
-                  ? activeNotesReal
-                      .map((item) => fn.convertMidiIdToNote(item))
-                      .toString()
-                  : "n/a",
-            },
-            {
-              name: "Chord possibilities",
-              value:
-                activeNotesReal.length > 2
-                  ? detect(
-                      activeNotesReal.map((item) => {
-                        return fn.convertMidiIdToNoteName(item);
-                      })
-                    ).toString()
-                  : "n/a",
-            },
-            {
-              name: "Intervallic Distances",
-              value:
-                activeNotesReal.length > 1
-                  ? fn.extractDistances(fn.extractNotes(activeNotes)).toString()
-                  : "n/a",
-            },
-            {
-              name: "Root Note",
-              value:
-                activeNotesReal.length > 0
-                  ? fn.convertMidiIdToNote(fn.extractRoot(activeNotesReal)[0])
-                  : "n/a",
-            },
-          ]}
-        </KeyValueTable>
+        <ChordReadout
+          chords={
+            activeNotesReal.length > 2 &&
+            detect(
+              activeNotesReal.map((item) => {
+                return fn.convertMidiIdToNoteName(item);
+              })
+            )
+          }
+        />
       </VerticalStack>
       <Keyboard
         setTarget={setTarget}
