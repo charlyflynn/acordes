@@ -4,13 +4,13 @@ import styled from "styled-components";
 const TextStyled = styled.span`
   font-size: ${({ large }) => (large ? "52px" : "24px")};
   font-weight: bold;
-  color: ${({ colour }) => (colour ? colour : "ivory")};
+  color: ${({ color }) => (color ? color : "ivory")};
   white-space: nowrap;
 `;
 
-const Text = ({ children, large = false, colour }) => {
+const Text = ({ children, large = false, color }) => {
   return (
-    <TextStyled large={large} colour={colour}>
+    <TextStyled large={large} color={color}>
       {children}
     </TextStyled>
   );

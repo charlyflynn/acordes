@@ -1,10 +1,11 @@
+import { detect } from "@tonaljs/chord-detect";
 import React from "react";
 import * as fn from "../functions";
-import KeyValueTable from './KeyValueTable';
+import KeyValueTable from "./KeyValueTable";
 
-const Info = (({ activeNotesReal }) => {
+const Info = ({ activeNotes, activeNotesReal, target }) => {
   return (
-    <KeyValueTable>
+    <KeyValueTable styles={{ justifyContent: "center" }}>
       {[
         { name: "Target Midi Id", value: target },
         { name: "Target Note", value: fn.convertMidiIdToNote(target) },
@@ -49,7 +50,7 @@ const Info = (({ activeNotesReal }) => {
         },
       ]}
     </KeyValueTable>
-  )
+  );
 };
 
 export default Info;

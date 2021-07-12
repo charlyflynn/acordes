@@ -4,6 +4,7 @@ import Text from "./Text";
 
 const Container = styled.div`
   display: flex;
+  justify-content: center;
   width: 400px;
 `;
 
@@ -22,7 +23,7 @@ const Value = styled.div`
 const Column = styled.div`
   display: flex;
   flex-direction: column;
-  /* width: 50%; */
+  justify-content: center;
 `;
 
 const Table = ({ children }) => {

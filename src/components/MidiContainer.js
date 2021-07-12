@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import * as fn from "../functions";
 import ChordReadout from "./ChordReadout";
+import Info from "./Info";
 import Keyboard from "./Keyboard";
 import Settings from "./Settings";
 import Text from "./Text";
@@ -29,6 +30,12 @@ const Header = styled.div`
   height: auto;
   border-bottom: 1px solid ivory;
   padding: 24px;
+`;
+
+const InfoContainer = styled.div`
+  display: flex;
+  flex-direction: horizontal;
+  justify-content: ;
 `;
 
 const activeNotesDefault = [...Array(127).fill(false)];
@@ -67,7 +74,6 @@ const View = () => {
         false,
         ...activeNotes.slice(noteID, activeNotes.length),
       ]);
-      // activeNotes.current[noteID] = false;
     }
   };
 
@@ -86,7 +92,7 @@ const View = () => {
     <Container>
       <Header>
         <VerticalStack>
-          <Text small colour={midiState ? "lightgreen" : "goldenrod"}>
+          <Text small color={midiState ? "lightgreen" : "goldenrod"}>
             {midiState
               ? "external devices connected:"
               : "external device not found"}
@@ -96,16 +102,25 @@ const View = () => {
         <Settings settings={{ startingOctave, totalOctaves }} />
       </Header>
       <VerticalStack>
-        <ChordReadout
-          chords={
-            activeNotesReal.length > 2 &&
-            detect(
-              activeNotesReal.map((item) => {
-                return fn.convertMidiIdToNoteName(item);
-              })
-            )
-          }
-        />
+        <InfoContainer>
+          <ChordReadout
+            chords={
+              activeNotesReal.length > 2
+                ? detect(
+                    activeNotesReal.map((item) => {
+                      return fn.convertMidiIdToNoteName(item);
+                    })
+                  )
+                : []
+            }
+          />
+
+          <Info
+            activeNotes={activeNotes}
+            activeNotesReal={activeNotesReal}
+            target={target}
+          />
+        </InfoContainer>
       </VerticalStack>
       <Keyboard
         setTarget={setTarget}
