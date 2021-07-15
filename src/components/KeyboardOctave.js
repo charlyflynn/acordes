@@ -16,25 +16,31 @@ const thinBorder = "2px solid #282c34";
 const thickBorder = "1px solid #282c34";
 
 const Key = styled.div`
+  // page position
   position: absolute;
   box-sizing: border-box;
-  margin-bottom: 50px;
+
+  //key color
   background-color: ${({ type, active }) =>
     active ? "goldenrod" : type ? "black" : "ivory"};
-  z-index: ${({ type }) => type + 1};
+  :hover {
+    background-color: ${({ active }) =>
+      active ? "grey" : "hsl(43, 74%, 80%)"};
+  }
+
+  // black/white key construction
+  left: ${({ offset }) => `${offset * slotWidth}px`};
   width: ${({ type }) => (type ? blackKeyWidth : whiteKeyWidth)}px;
   height: ${({ type }) => (type ? blackKeyHeight : whiteKeyHeight)}px;
   bottom: ${({ type }) => (type ? whiteKeyHeight - blackKeyHeight : 0)}px;
-  left: ${({ offset }) => `${offset * slotWidth}px`};
+  z-index: ${({ type }) => type + 1};
+
+  // key borders
   border-radius: 0 0 ${whiteKeyWidth / 13}px ${whiteKeyWidth / 13}px;
   border-top: ${thickBorder};
-  border-bottom: ${thickBorder};
   border-left: ${({ type }) => (type ? thinBorder : thickBorder)};
   border-right: ${({ type }) => (type ? thinBorder : thickBorder)};
   border-bottom: ${({ type }) => (type ? thinBorder : null)};
-  :hover {
-    background-color: ${({ active }) => (active ? "lightgrey" : "lightgrey")};
-  }
 `;
 
 const Keybed = styled.div`

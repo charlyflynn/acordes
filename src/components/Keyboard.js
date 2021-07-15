@@ -7,6 +7,7 @@ const KeyboardStyled = styled.div`
   display: flex;
   flex-wrap: flex;
   flex-direction: row;
+  margin-bottom: 50px;
 `;
 
 const Keyboard = ({ setTarget, activeNotes, startingOctave, totalOctaves }) => {
