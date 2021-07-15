@@ -12,7 +12,7 @@ import VerticalStack from "./VerticalStack";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  overflow: hidden;
   height: 100vh;
   width: 100vw;
   z-index: -1;
@@ -35,7 +35,10 @@ const Header = styled.div`
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: horizontal;
-  justify-content: ;
+`;
+
+const ContentContainer = styled.div`
+  flex-grow: 1;
 `;
 
 const activeNotesDefault = [...Array(127).fill(false)];
@@ -101,27 +104,29 @@ const View = () => {
         </VerticalStack>
         <Settings settings={{ startingOctave, totalOctaves }} />
       </Header>
-      <VerticalStack>
-        <InfoContainer>
-          <ChordReadout
-            chords={
-              activeNotesReal.length > 2
-                ? detect(
-                    activeNotesReal.map((item) => {
-                      return fn.convertMidiIdToNoteName(item);
-                    })
-                  )
-                : []
-            }
-          />
+      <ContentContainer>
+        <VerticalStack>
+          <InfoContainer>
+            <ChordReadout
+              chords={
+                activeNotesReal.length > 2
+                  ? detect(
+                      activeNotesReal.map((item) => {
+                        return fn.convertMidiIdToNoteName(item);
+                      })
+                    )
+                  : []
+              }
+            />
 
-          <Info
-            activeNotes={activeNotes}
-            activeNotesReal={activeNotesReal}
-            target={target}
-          />
-        </InfoContainer>
-      </VerticalStack>
+            <Info
+              activeNotes={activeNotes}
+              activeNotesReal={activeNotesReal}
+              target={target}
+            />
+          </InfoContainer>
+        </VerticalStack>
+      </ContentContainer>
       <Keyboard
         setTarget={setTarget}
         activeNotes={activeNotes}
