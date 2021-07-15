@@ -1,8 +1,8 @@
 import { detect } from "@tonaljs/chord-detect";
 import {
   ChordReadout,
-  Info,
   Keyboard,
+  MidiNoteInfo,
   Settings,
   Text,
   VerticalStack,
@@ -121,7 +121,7 @@ const View = () => {
               }
             />
 
-            <Info
+            <MidiNoteInfo
               activeNotes={activeNotes}
               activeNotesReal={activeNotesReal}
               target={target}
