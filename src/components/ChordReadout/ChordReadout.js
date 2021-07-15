@@ -7,10 +7,10 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  height: 250px;
-  width: 450px;
-  border-radius: 45px;
-  border: 1px solid ivory;
+  height: 300px;
+  width: 300px;
+  border-radius: 300px;
+  border: 2px solid ivory;
 `;
 
 const ChordReadout = ({ chords }) => {
@@ -24,7 +24,7 @@ const ChordReadout = ({ chords }) => {
       <Text large color="goldenrod">
         {bestFit}
       </Text>
-      <VerticalStack>{alternatives}</VerticalStack>
+      {false && <VerticalStack>{alternatives}</VerticalStack>}
     </Container>
   );
 };
