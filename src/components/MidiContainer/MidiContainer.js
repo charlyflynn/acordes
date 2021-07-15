@@ -19,7 +19,6 @@ const Container = styled.div`
   width: 100vw;
   z-index: -1;
   align-items: center;
-  justify-content: space-between;
   background-color: #282c34;
 `;
 
@@ -41,6 +40,8 @@ const InfoContainer = styled.div`
 
 const ContentContainer = styled.div`
   flex-grow: 1;
+  justify-content: flex-end;
+  margin-bottom: 50px;
 `;
 
 const activeNotesDefault = [...Array(127).fill(false)];
@@ -128,13 +129,13 @@ const View = () => {
             />
           </InfoContainer>
         </VerticalStack>
+        <Keyboard
+          setTarget={setTarget}
+          activeNotes={activeNotes}
+          startingOctave={startingOctave}
+          totalOctaves={totalOctaves}
+        />
       </ContentContainer>
-      <Keyboard
-        setTarget={setTarget}
-        activeNotes={activeNotes}
-        startingOctave={startingOctave}
-        totalOctaves={totalOctaves}
-      />
     </Container>
   );
 };
