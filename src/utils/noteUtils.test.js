@@ -1,4 +1,4 @@
-import * as fn from "./";
+import * as noteUtils from "./noteUtils";
 
 const activeNotes = [...Array(127).fill(false)];
 
@@ -7,19 +7,17 @@ activeNotes[45] = true;
 activeNotes[49] = true;
 
 test("extract active notes to an array of midi note IDs", () => {
-  expect(fn.extractNotes(activeNotes)).toStrictEqual([40, 45, 49]);
+  expect(noteUtils.extractNotes(activeNotes)).toStrictEqual([40, 45, 49]);
 });
 
 test("extract root notes by selecting lowest from MIDI note indice array", () => {
-  expect(fn.extractRoot(fn.extractNotes(activeNotes))).toStrictEqual([
-    40,
-    [45, 49],
-  ]);
+  expect(
+    noteUtils.extractRoot(noteUtils.extractNotes(activeNotes))
+  ).toStrictEqual([40, [45, 49]]);
 });
 
 test("extract intervallic distances in semitones from MIDI note indice array", () => {
-  expect(fn.extractDistances(fn.extractNotes(activeNotes))).toStrictEqual([
-    5,
-    4,
-  ]);
+  expect(
+    noteUtils.extractDistances(noteUtils.extractNotes(activeNotes))
+  ).toStrictEqual([5, 4]);
 });

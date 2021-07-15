@@ -7,9 +7,9 @@ import {
   Text,
   VerticalStack,
 } from "components";
-import * as fn from "functions";
 import React from "react";
 import styled from "styled-components";
+import { noteUtils } from "utils";
 
 const Container = styled.div`
   display: flex;
@@ -91,7 +91,7 @@ const View = () => {
 
   const [midiState, setmidiState] = React.useState(false);
 
-  const activeNotesReal = fn.extractNotes(activeNotes);
+  const activeNotesReal = noteUtils.extractNotes(activeNotes);
 
   return (
     <Container>
@@ -114,7 +114,7 @@ const View = () => {
                 activeNotesReal.length > 2
                   ? detect(
                       activeNotesReal.map((item) => {
-                        return fn.convertMidiIdToNoteName(item);
+                        return noteUtils.convertMidiIdToNoteName(item);
                       })
                     )
                   : []

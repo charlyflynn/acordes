@@ -1,14 +1,14 @@
 import { detect } from "@tonaljs/chord-detect";
 import { KeyValueTable } from "components";
-import * as fn from "functions";
 import React from "react";
+import { noteUtils } from "utils";
 
 const Info = ({ activeNotes, activeNotesReal, target }) => {
   return (
     <KeyValueTable styles={{ justifyContent: "center" }}>
       {[
         { name: "Target Midi Id", value: target },
-        { name: "Target Note", value: fn.convertMidiIdToNote(target) },
+        { name: "Target Note", value: noteUtils.convertMidiIdToNote(target) },
         {
           name: "Selected Notes (Midi)",
           value:
@@ -19,7 +19,7 @@ const Info = ({ activeNotes, activeNotesReal, target }) => {
           value:
             activeNotesReal.length > 0
               ? activeNotesReal
-                  .map((item) => fn.convertMidiIdToNote(item))
+                  .map((item) => noteUtils.convertMidiIdToNote(item))
                   .toString()
               : "n/a",
         },
@@ -29,7 +29,7 @@ const Info = ({ activeNotes, activeNotesReal, target }) => {
             activeNotesReal.length > 2
               ? detect(
                   activeNotesReal.map((item) => {
-                    return fn.convertMidiIdToNoteName(item);
+                    return noteUtils.convertMidiIdToNoteName(item);
                   })
                 ).toString()
               : "n/a",
@@ -38,14 +38,18 @@ const Info = ({ activeNotes, activeNotesReal, target }) => {
           name: "Intervallic Distances",
           value:
             activeNotesReal.length > 1
-              ? fn.extractDistances(fn.extractNotes(activeNotes)).toString()
+              ? noteUtils
+                  .extractDistances(noteUtils.extractNotes(activeNotes))
+                  .toString()
               : "n/a",
         },
         {
           name: "Root Note",
           value:
             activeNotesReal.length > 0
-              ? fn.convertMidiIdToNote(fn.extractRoot(activeNotesReal)[0])
+              ? noteUtils.convertMidiIdToNote(
+                  noteUtils.extractRoot(activeNotesReal)[0]
+                )
               : "n/a",
         },
       ]}
