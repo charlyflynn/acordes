@@ -1,4 +1,4 @@
-import { Text } from "components";
+import { Text, VerticalStack } from "components";
 import React from "react";
 import styled from "styled-components";
 
@@ -15,13 +15,16 @@ const Container = styled.div`
 
 const ChordReadout = ({ chords }) => {
   const bestFit = chords.length ? chords[0] : "-";
-  const alternatives = chords.length > 1 ? chords.slice(1) : "-";
+  const alternatives =
+    chords.length > 1
+      ? chords.slice(1).map((item) => <Text color="ivory">{item}</Text>)
+      : "-";
   return (
     <Container>
       <Text large color="goldenrod">
         {bestFit}
       </Text>
-      <Text color="ivory">{alternatives}</Text>
+      <VerticalStack>{alternatives}</VerticalStack>
     </Container>
   );
 };
