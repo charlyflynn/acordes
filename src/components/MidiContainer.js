@@ -12,7 +12,7 @@ import VerticalStack from "./VerticalStack";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: auto;
   height: 100vh;
   width: 100vw;
   z-index: -1;
@@ -26,10 +26,10 @@ const Header = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   align-items: space-between;
-  width: 100%;
+  width: 100vw;
   height: auto;
   border-bottom: 1px solid ivory;
-  padding: 24px;
+  padding: 24px 0;
 `;
 
 const InfoContainer = styled.div`
