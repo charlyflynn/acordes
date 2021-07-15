@@ -1,7 +1,7 @@
 import { detect } from "@tonaljs/chord-detect";
+import { KeyValueTable } from "components";
+import * as fn from "functions";
 import React from "react";
-import * as fn from "../functions";
-import KeyValueTable from "./KeyValueTable";
 
 const Info = ({ activeNotes, activeNotesReal, target }) => {
   return (

@@ -1,6 +1,5 @@
+import { Text, VerticalStack } from "components";
 import React from "react";
-import Text from "./Text";
-import VerticalStack from "./VerticalStack";
 
 const Settings = ({ settings: { startingOctave, totalOctaves } }) => {
   return (

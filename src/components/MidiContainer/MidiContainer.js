@@ -1,13 +1,15 @@
 import { detect } from "@tonaljs/chord-detect";
+import {
+  ChordReadout,
+  Info,
+  Keyboard,
+  Settings,
+  Text,
+  VerticalStack,
+} from "components";
+import * as fn from "functions";
 import React from "react";
 import styled from "styled-components";
-import * as fn from "../functions";
-import ChordReadout from "./ChordReadout";
-import Info from "./Info";
-import Keyboard from "./Keyboard";
-import Settings from "./Settings";
-import Text from "./Text";
-import VerticalStack from "./VerticalStack";
 
 const Container = styled.div`
   display: flex;

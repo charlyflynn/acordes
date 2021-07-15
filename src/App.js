@@ -1,4 +1,4 @@
-import MidiContainer from "./components/MidiContainer";
+import { MidiContainer } from "components";
 
 function App() {
   return (
