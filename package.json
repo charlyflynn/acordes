@@ -2,7 +2,7 @@
   "name": "acordes",
   "version": "0.1.0",
   "main": "index.js",
-  "repository": "git@github.com:phlye/acordes.git",
+  "repository": "git@github.com:charlyflynn/acordes.git",
   "author": "Charlie Flynn",
   "license": "MIT",
   "private": true,
