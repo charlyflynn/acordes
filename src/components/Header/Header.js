@@ -1,7 +1,7 @@
 import { KeyValueTable, Text, VerticalStack } from "components";
 import styled from "styled-components";
 
-const StyledHeader = styled.head`
+const StyledHeader = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;

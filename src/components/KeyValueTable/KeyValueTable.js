@@ -27,20 +27,17 @@ const Column = styled.div`
 `;
 
 const Table = ({ data }) => {
-  const keys = [];
-  const values = [];
-  data.forEach(({ key, value }) => {
-    keys.push(
-      <Key>
-        <Text>{key}</Text>
-      </Key>
-    );
-    values.push(
-      <Value>
-        <Text>{value}</Text>
-      </Value>
-    );
-  });
+  const keys = data.map(({ key }) => (
+    <Key key={`${key}-key`}>
+      <Text>{key}</Text>
+    </Key>
+  ));
+  const values = data.map(({ key, value }) => (
+    <Value key={`${key}-value`}>
+      <Text>{value}</Text>
+    </Value>
+  ));
+
   return (
     <Container>
       <Column>{keys}</Column>
