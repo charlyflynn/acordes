@@ -26,7 +26,7 @@ const MidiNoteInfo = ({ activeNotes, activeNotesReal, target }) => {
         activeNotesReal.length > 2
           ? detect(
               activeNotesReal.map((item) => {
-                return noteUtils.convertMidiIdToNotekey(item);
+                return noteUtils.convertMidiIdToNoteName(item);
               })
             ).toString()
           : "n/a",
