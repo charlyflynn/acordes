@@ -1,6 +1,7 @@
 import { detect } from "@tonaljs/chord-detect";
 import {
   ChordReadout,
+  DesktopOnly,
   Keyboard,
   MidiNoteInfo,
   Settings,
@@ -8,6 +9,7 @@ import {
   VerticalStack,
 } from "components";
 import React from "react";
+import { isDesktop } from "react-device-detect";
 import styled from "styled-components";
 import { noteUtils } from "utils";
 
@@ -96,46 +98,52 @@ const View = () => {
 
   return (
     <Container>
-      <Header>
-        <VerticalStack>
-          <Text small color={midiState ? "lightgreen" : "goldenrod"}>
-            {midiState
-              ? "external devices connected:"
-              : "external device not found"}
-          </Text>
-          <Text>{false && "no devices"}</Text>
-        </VerticalStack>
-        <Settings settings={{ startingOctave, totalOctaves }} />
-      </Header>
-      <ContentContainer>
-        <VerticalStack>
-          <InfoContainer>
-            <ChordReadout
-              chords={
-                activeNotesReal.length > 2
-                  ? detect(
-                      activeNotesReal.map((item) => {
-                        return noteUtils.convertMidiIdToNoteName(item);
-                      })
-                    )
-                  : []
-              }
-            />
+      {isDesktop ? (
+        <>
+          <Header>
+            <VerticalStack>
+              <Text small color={midiState ? "lightgreen" : "goldenrod"}>
+                {midiState
+                  ? "external devices connected:"
+                  : "external device not found"}
+              </Text>
+              <Text>{false && "no devices"}</Text>
+            </VerticalStack>
+            <Settings settings={{ startingOctave, totalOctaves }} />
+          </Header>
+          <ContentContainer>
+            <VerticalStack>
+              <InfoContainer>
+                <ChordReadout
+                  chords={
+                    activeNotesReal.length > 2
+                      ? detect(
+                          activeNotesReal.map((item) => {
+                            return noteUtils.convertMidiIdToNoteName(item);
+                          })
+                        )
+                      : []
+                  }
+                />
 
-            <MidiNoteInfo
+                <MidiNoteInfo
+                  activeNotes={activeNotes}
+                  activeNotesReal={activeNotesReal}
+                  target={target}
+                />
+              </InfoContainer>
+            </VerticalStack>
+            <Keyboard
+              setTarget={setTarget}
               activeNotes={activeNotes}
-              activeNotesReal={activeNotesReal}
-              target={target}
+              startingOctave={startingOctave}
+              totalOctaves={totalOctaves}
             />
-          </InfoContainer>
-        </VerticalStack>
-        <Keyboard
-          setTarget={setTarget}
-          activeNotes={activeNotes}
-          startingOctave={startingOctave}
-          totalOctaves={totalOctaves}
-        />
-      </ContentContainer>
+          </ContentContainer>
+        </>
+      ) : (
+        <DesktopOnly />
+      )}
     </Container>
   );
 };
