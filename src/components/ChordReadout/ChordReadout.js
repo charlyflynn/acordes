@@ -7,9 +7,9 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  height: 300px;
-  width: 300px;
-  border-radius: 300px;
+  height: 325px;
+  width: 325px;
+  border-radius: 325px;
   border: 2px solid ivory;
 `;
 
