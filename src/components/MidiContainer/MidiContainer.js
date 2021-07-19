@@ -2,16 +2,20 @@ import { detect } from "@tonaljs/chord-detect";
 import {
   ChordReadout,
   DesktopOnly,
+  Header,
   Keyboard,
   MidiNoteInfo,
-  Settings,
-  Text,
   VerticalStack,
 } from "components";
 import React from "react";
 import { isDesktop } from "react-device-detect";
 import styled from "styled-components";
 import { noteUtils } from "utils";
+
+const settings = {
+  startingOctave: { displayName: "Starting Octave", value: 3 },
+  totalOctaves: { displayName: "Total Octaves", value: 3 },
+};
 
 const Container = styled.div`
   display: flex;
@@ -22,17 +26,6 @@ const Container = styled.div`
   z-index: -1;
   align-items: center;
   background-color: #282c34;
-`;
-
-const Header = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: space-between;
-  width: 100vw;
-  height: auto;
-  border-bottom: 1px solid ivory;
-  padding: 24px 0;
 `;
 
 const InfoContainer = styled.div`
@@ -100,17 +93,7 @@ const View = () => {
     <Container>
       {isDesktop ? (
         <>
-          <Header>
-            <VerticalStack>
-              <Text small color={midiState ? "lightgreen" : "goldenrod"}>
-                {midiState
-                  ? "external devices connected:"
-                  : "external device not found"}
-              </Text>
-              <Text>{false && "no devices"}</Text>
-            </VerticalStack>
-            <Settings settings={{ startingOctave, totalOctaves }} />
-          </Header>
+          <Header midiState={midiState} settings={settings} />
           <ContentContainer>
             <VerticalStack>
               <InfoContainer>

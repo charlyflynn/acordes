@@ -8,16 +8,16 @@ const Container = styled.div`
   width: 400px;
 `;
 
-const Name = styled.div`
+const Key = styled.div`
   text-align: right;
   padding-right: 5px;
   border-right: 1px solid ivory;
-  padding-right: 5px;
+  padding-right: 10px;
 `;
 
 const Value = styled.div`
   text-align: left;
-  padding-left: 5px;
+  padding-left: 10px;
 `;
 
 const Column = styled.div`
@@ -26,14 +26,14 @@ const Column = styled.div`
   justify-content: center;
 `;
 
-const Table = ({ children }) => {
-  const names = [];
+const Table = ({ data }) => {
+  const keys = [];
   const values = [];
-  children.forEach(({ name, value }) => {
-    names.push(
-      <Name>
-        <Text>{name}</Text>
-      </Name>
+  data.forEach(({ key, value }) => {
+    keys.push(
+      <Key>
+        <Text>{key}</Text>
+      </Key>
     );
     values.push(
       <Value>
@@ -43,7 +43,7 @@ const Table = ({ children }) => {
   });
   return (
     <Container>
-      <Column>{names}</Column>
+      <Column>{keys}</Column>
       <Column>{values}</Column>
     </Container>
   );
