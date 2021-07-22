@@ -1,6 +1,6 @@
 A tool to facilitate music study and production, by naming chords input with either the mouse or a MIDI keyboard.
 
-[deployed version](acordes.netlify.app)
+[deployed version](https://acordes.netlify.app)
 
 # Getting Started with Create React App
 
