@@ -8,7 +8,7 @@ import {
   VerticalStack,
 } from "components";
 import { MidiContext } from "contexts";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { isDesktop } from "react-device-detect";
 import styled from "styled-components";
 import { noteUtils } from "utils";
@@ -35,62 +35,17 @@ const ContentContainer = styled.div`
   margin-bottom: 50px;
 `;
 
-const activeNotesDefault = [...Array(127).fill(false)];
-
 const Container = () => {
-  const { settings } = useContext(MidiContext);
-  const [activeNotes, setactiveNotes] = useState(activeNotesDefault);
-  const [startingOctave] = useState(3);
-  const [totalOctaves] = useState(3);
-  const onMIDISuccess = (access) => {
-    if (access.inputs.size > 0) setmidiState(true);
-    else setmidiState(false);
-
-    for (var input of access.inputs.values())
-      input.onmidimessage = (midiMessage) => {
-        getMIDIMessage(midiMessage);
-      };
-  };
-
-  const onMIDIFailure = () => {
-    window.alert("Midi access failure");
-    console.log("Midi access failure");
-  };
-
-  const getMIDIMessage = (midiMessage, currentNotes) => {
-    const [midiCmd, noteID, velocity] = midiMessage.data;
-    if (midiCmd === 144 && velocity > 0) {
-      setactiveNotes([
-        ...activeNotes.slice(0, noteID),
-        true,
-        ...activeNotes.slice(noteID, activeNotes.length),
-      ]);
-      // activeNotes.current[noteID] = true;
-    } else if (midiCmd === 128 || velocity === 0) {
-      setactiveNotes([
-        ...activeNotes.slice(0, noteID),
-        false,
-        ...activeNotes.slice(noteID, activeNotes.length),
-      ]);
-    }
-  };
-
-  useEffect(() => {
-    navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  const { settings, activeNotes, activeNotesReal, devices } = useContext(
+    MidiContext
+  );
   const [target, setTarget] = useState("n/a");
-
-  const [midiState, setmidiState] = useState(false);
-
-  const activeNotesReal = noteUtils.extractNotes(activeNotes);
 
   return (
     <Wrapper>
       {isDesktop ? (
         <>
-          <Header midiState={midiState} settings={settings} />
+          <Header devices={devices} settings={settings} />
           <ContentContainer>
             <VerticalStack>
               <InfoContainer>
@@ -116,8 +71,8 @@ const Container = () => {
             <Keyboard
               setTarget={setTarget}
               activeNotes={activeNotes}
-              startingOctave={startingOctave}
-              totalOctaves={totalOctaves}
+              octaveStart={settings.octaveStart.value}
+              octaveSpan={settings.octaveSpan.value}
             />
           </ContentContainer>
         </>

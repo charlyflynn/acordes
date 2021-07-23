@@ -12,7 +12,7 @@ const StyledHeader = styled.div`
   padding: 24px 0;
 `;
 
-const Header = ({ midiState, settings }) => {
+const Header = ({ devices, settings }) => {
   const settingsDisplay = Object.entries(settings).map((item) => ({
     key: item[1].displayName,
     value: item[1].value,
@@ -21,9 +21,9 @@ const Header = ({ midiState, settings }) => {
   return (
     <StyledHeader>
       <VerticalStack>
-        <Text small color={midiState ? "lightgreen" : "goldenrod"}>
-          {midiState
-            ? "external devices connected:"
+        <Text small color={devices.length > 0 ? "lightgreen" : "goldenrod"}>
+          {devices.length > 0
+            ? "external device connected"
             : "external device not found"}
         </Text>
         <Text>{false && "no devices"}</Text>
