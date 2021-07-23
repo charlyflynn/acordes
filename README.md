@@ -1,8 +1,26 @@
+# acordes
+
 A tool to facilitate music study and production, by naming chords input with either the mouse or a MIDI keyboard.
+
+acordes is simply the spanish and portuguese word for 'chords', pronounced `ah-core-dez` and `ah-coor-jeez` respectively.
 
 [deployed version](https://acordes.netlify.app)
 
-# Getting Started with Create React App
+
+## Future plans
+- select from different chord classifiers (current one is fantastic but also limited)
+- 
+
+##  Known issues
+- doesn't work on mobile, so I have prevented it from rendering on mobile
+- midi keyboard integration is a bit confused at the moment, so focussing on underlying structure with 'point-and-click' method
+- able to select and remember octave start and octave span, (and expand to have other settings available)
+- typescript. 
+- animations to go alongside chord changes
+
+---
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
