@@ -1,9 +1,12 @@
-import { MidiContainer } from "components";
+import { Container } from "components";
+import { MidiContextProvider } from "contexts";
 
 function App() {
   return (
     <div className="App">
-      <MidiContainer />
+      <MidiContextProvider>
+        <Container />
+      </MidiContextProvider>
     </div>
   );
 }

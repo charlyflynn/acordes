@@ -19,7 +19,7 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "BROWSER='google chrome dev' react-scripts start",
+    "start": "BROWSER='none' react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
