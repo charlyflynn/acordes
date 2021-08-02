@@ -10,15 +10,19 @@ const KeyboardStyled = styled.div`
   margin-bottom: 50px;
 `;
 
-const Keyboard = ({ setTarget, activeNotes, octaveStart, octaveSpan }) => {
+const Keyboard = ({
+  setTarget,
+  activeNotes,
+  settings: { octaveStart, octaveSpan },
+}) => {
   return (
     <KeyboardStyled>
-      {[...Array(octaveSpan).keys()].map((_, i) => (
+      {[...Array(octaveSpan.value).keys()].map((_, i) => (
         <KeyboardOctave
-          key={`octave${i + octaveStart}`}
+          key={`octave${i + octaveStart.value}`}
           setTarget={setTarget}
           activeNotes={activeNotes}
-          octave={i + octaveStart}
+          octave={i + octaveStart.value}
         />
       ))}
     </KeyboardStyled>

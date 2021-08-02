@@ -40,7 +40,6 @@ const Container = () => {
     MidiContext
   );
   const [target, setTarget] = useState("n/a");
-
   return (
     <Wrapper>
       {isDesktop ? (
@@ -71,8 +70,7 @@ const Container = () => {
             <Keyboard
               setTarget={setTarget}
               activeNotes={activeNotes}
-              octaveStart={settings.octaveStart.value}
-              octaveSpan={settings.octaveSpan.value}
+              settings={settings}
             />
           </ContentContainer>
         </>

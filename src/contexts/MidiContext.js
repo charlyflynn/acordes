@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import { noteUtils } from "utils";
 
 const MidiContext = createContext();
@@ -17,7 +17,9 @@ const onMIDIFailure = () => {
 const MidiContextProvider = ({ children }) => {
   const [settings] = useState(defaultSettings);
   const [devices, setDevices] = useState([]);
-  const [activeNotes, setactiveNotes] = useState(activeNotesDefault);
+  const [activeNotes, setActiveNotes] = useState(activeNotesDefault);
+
+  const noteRef = useRef(activeNotesDefault);
 
   useEffect(() => {
     navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
@@ -30,29 +32,41 @@ const MidiContextProvider = ({ children }) => {
 
     for (var input of access.inputs.values())
       input.onmidimessage = (midiMessage) => {
+        console.log(midiMessage);
         getMIDIMessage(midiMessage);
       };
   };
 
-  const getMIDIMessage = (midiMessage, currentNotes) => {
+  console.log("noteRef", noteRef);
+  console.log("activeNotes", activeNotes);
+  const getMIDIMessage = (midiMessage) => {
     const [midiCmd, noteID, velocity] = midiMessage.data;
+    console.log("midiMessage", midiCmd, noteID, velocity);
     if (midiCmd === 144 && velocity > 0) {
-      setactiveNotes([
-        ...activeNotes.slice(0, noteID),
-        true,
-        ...activeNotes.slice(noteID, activeNotes.length),
-      ]);
+      noteRef.current[noteID] = true;
+      const newActiveNotes = activeNotes;
+      activeNotes[noteID] = true;
+      setActiveNotes(newActiveNotes);
+      // setactiveNotes([
+      //   ...activeNotes.slice(0, noteID),
+      //   true,
+      //   ...activeNotes.slice(noteID, activeNotes.length),
+      // ]);
       // activeNotes.current[noteID] = true;
     } else if (midiCmd === 128 || velocity === 0) {
-      setactiveNotes([
-        ...activeNotes.slice(0, noteID),
-        false,
-        ...activeNotes.slice(noteID, activeNotes.length),
-      ]);
+      const newActiveNotes = activeNotes;
+      activeNotes[noteID] = true;
+      setActiveNotes(newActiveNotes);
+      // setactiveNotes([
+      //   ...activeNotes.slice(0, noteID),
+      //   false,
+      //   ...activeNotes.slice(noteID, activeNotes.length),
+      // ]);
     }
   };
 
   const activeNotesReal = noteUtils.extractNotes(activeNotes);
+  // console.log("notes", activeNotes, activeNotesReal);
 
   return (
     <MidiContext.Provider
