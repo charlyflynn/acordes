@@ -13,7 +13,11 @@ const Container = styled.div`
   border: 2px solid ivory;
 `;
 
-const ChordReadout = ({ chords }) => {
+interface PropTypes {
+  chords: string[];
+}
+
+const ChordReadout = ({ chords }: PropTypes) => {
   const bestFit = chords.length ? chords[0] : "-";
   const alternatives =
     chords.length > 1
@@ -21,7 +25,7 @@ const ChordReadout = ({ chords }) => {
       : "-";
   return (
     <Container>
-      <Text large color="goldenrod">
+      <Text large={true} color="goldenrod">
         {bestFit}
       </Text>
       {false && <VerticalStack>{alternatives}</VerticalStack>}

@@ -15,7 +15,13 @@ const keyOffset = [0, 1.45, 2, 3.45, 4, 6, 7.45, 8, 9.45, 10, 11.45, 12];
 const thinBorder = "2px solid #282c34";
 const thickBorder = "1px solid #282c34";
 
-const Key = styled.div`
+interface KeyPropTypes {
+  type: number;
+  active: boolean;
+  offset: number;
+}
+
+const Key = styled.div<KeyPropTypes>`
   // page position
   position: absolute;
   box-sizing: border-box;
@@ -48,7 +54,17 @@ const Keybed = styled.div`
   width: ${totalKeySlots * slotWidth}px;
 `;
 
-const KeyboardOctave = ({ setTarget, activeNotes, octave }) => {
+interface KeyboardOctavePropTypes {
+  setTarget: React.Dispatch<React.SetStateAction<number | string>>;
+  activeNotes: boolean[];
+  octave: number;
+}
+
+const KeyboardOctave = ({
+  setTarget,
+  activeNotes,
+  octave,
+}: KeyboardOctavePropTypes) => {
   const keyArray = [...Array(12).keys()].map((octaveIndex) => {
     const absIndex = octave * 12 + octaveIndex;
     const type = keyPattern[octaveIndex];

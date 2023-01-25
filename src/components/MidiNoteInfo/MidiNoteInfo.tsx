@@ -3,7 +3,13 @@ import { KeyValueTable } from "components";
 import React from "react";
 import { noteUtils } from "utils";
 
-const MidiNoteInfo = ({ activeNotes, activeNotesReal, target }) => {
+interface PropTypes {
+  activeNotes: boolean[];
+  activeNotesReal: string[];
+  target: number;
+}
+
+const MidiNoteInfo = ({ activeNotes, activeNotesReal, target }: PropTypes) => {
   const infoData = [
     { key: "Target Midi Id", value: target },
     { key: "Target Note", value: noteUtils.convertMidiIdToNote(target) },

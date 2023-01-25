@@ -26,7 +26,14 @@ const Column = styled.div`
   justify-content: center;
 `;
 
-const Table = ({ data }) => {
+interface PropTypes {
+  data: {
+    key: string;
+    value: string | number;
+  }[];
+}
+
+const Table = ({ data }: PropTypes) => {
   const keys = data.map(({ key }) => (
     <Key key={`${key}-key`}>
       <Text>{key}</Text>

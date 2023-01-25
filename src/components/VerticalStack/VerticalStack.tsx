@@ -9,6 +9,8 @@ const Container = styled.div`
   height: 100%;
 `;
 
-const VerticalStack = ({ children }) => <Container>{children}</Container>;
+const VerticalStack = ({ children }: { children: React.ReactNode }) => (
+  <Container>{children}</Container>
+);
 
 export default VerticalStack;
