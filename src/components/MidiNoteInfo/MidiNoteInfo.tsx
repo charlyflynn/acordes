@@ -50,7 +50,7 @@ const MidiNoteInfo = ({ activeNotes, activeNotesReal, target }: PropTypes) => {
     },
   ];
 
-  return false && <KeyValueTable data={infoData} />;
+  return null && <KeyValueTable data={infoData} />;
 };
 
 export default MidiNoteInfo;

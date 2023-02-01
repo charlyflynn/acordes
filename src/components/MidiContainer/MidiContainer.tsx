@@ -39,16 +39,15 @@ const ContentContainer = styled.div`
   margin-bottom: 50px;
 `;
 
-const activeNotesDefault = [...Array(127).fill(false)];
-
 const View = () => {
-  const [activeNotes, setActiveNotes] = React.useState(activeNotesDefault);
   const [startingOctave] = React.useState(3);
   const [totalOctaves] = React.useState(3);
 
   const midi = useRef<WebMidi.MIDIAccess>();
   const [midiSuccess, setMidiSuccess] = React.useState<boolean>();
-
+  const noteRef = useRef([...Array(127).fill(false)]);
+  const [tick, setTick] = React.useState(false);
+  const activeNotes = noteRef.current;
   useEffect(() => {
     navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
   }, []);
@@ -71,13 +70,14 @@ const View = () => {
         input.onmidimessage = (message) => {
           const [midiCmd, noteID, velocity] = message.data;
           if (midiCmd === 144 && velocity > 0) {
-            const notes = [...activeNotes];
-            notes[noteID] = true;
-            setActiveNotes(notes);
+            activeNotes[noteID] = true;
+            // const notes = [...activeNotes];
+            // notes[noteID] = true;
+            // setActiveNotes(notes);
+            setTick(!tick);
           } else if (midiCmd === 128 || velocity === 0) {
-            const notes = [...activeNotes];
-            notes[noteID] = false;
-            setActiveNotes(notes);
+            activeNotes[noteID] = false;
+            setTick(!tick);
           }
         };
       });

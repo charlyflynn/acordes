@@ -16,6 +16,7 @@ interface PropTypes {
   startingOctave: number;
   totalOctaves: number;
 }
+
 const Keyboard = ({ setTarget, activeNotes, startingOctave, totalOctaves }: PropTypes) => {
   return (
     <KeyboardStyled>
