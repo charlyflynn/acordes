@@ -74,7 +74,9 @@ const KeyboardOctave = ({ setTarget, activeNotes, octave }: KeyboardOctavePropTy
         }}
         onMouseOver={() => setTarget(absIndex)}
         onMouseOut={() => setTarget(undefined)}
-      />
+      >
+        {absIndex === 60 ? "C4" : null}
+      </Key>
     );
   });
   return <Keybed>{keyArray}</Keybed>;

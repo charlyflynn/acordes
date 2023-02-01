@@ -1,5 +1,4 @@
 import { Text, VerticalStack } from "components";
-import React from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -20,9 +19,7 @@ interface PropTypes {
 const ChordReadout = ({ chords }: PropTypes) => {
   const bestFit = chords.length ? chords[0] : "-";
   const alternatives =
-    chords.length > 1
-      ? chords.slice(1).map((item) => <Text color="ivory">{item}</Text>)
-      : "-";
+    chords.length > 1 ? chords.slice(1).map((item) => <Text color="ivory">{item}</Text>) : "-";
   return (
     <Container>
       <Text large={true} color="goldenrod">

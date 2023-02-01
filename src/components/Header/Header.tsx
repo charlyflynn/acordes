@@ -18,7 +18,7 @@ interface PropTypes {
 }
 
 const Header = ({ midiSuccess, settings }: PropTypes) => {
-  const settingsDisplay = Object.entries(settings).map((item: any) => ({
+  const settingsData = Object.entries(settings).map((item: any) => ({
     key: item[1].displayName,
     value: item[1].value,
   }));
@@ -31,7 +31,7 @@ const Header = ({ midiSuccess, settings }: PropTypes) => {
         </Text>
         <Text>{false && "no devices"}</Text>
       </VerticalStack>
-      <KeyValueTable data={settingsDisplay} />
+      <KeyValueTable data={settingsData} />
     </StyledHeader>
   );
 };

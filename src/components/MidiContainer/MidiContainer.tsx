@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { detect } from "@tonaljs/chord-detect";
 import {
   ChordReadout,
@@ -11,11 +11,6 @@ import {
 import { isDesktop } from "react-device-detect";
 import styled from "styled-components";
 import { noteUtils } from "utils";
-
-const settings = {
-  startingOctave: { displayName: "Starting Octave", value: 3 },
-  totalOctaves: { displayName: "Total Octaves", value: 3 },
-};
 
 const Container = styled.div`
   display: flex;
@@ -40,13 +35,18 @@ const ContentContainer = styled.div`
 `;
 
 const View = () => {
-  const [startingOctave] = React.useState(3);
-  const [totalOctaves] = React.useState(3);
+  const [startingOctave] = useState(0);
+  const [totalOctaves] = useState(8);
+
+  const settings = {
+    startingOctave: { displayName: "Starting Octave", value: startingOctave },
+    totalOctaves: { displayName: "Total Octaves", value: totalOctaves },
+  };
 
   const midi = useRef<WebMidi.MIDIAccess>();
-  const [midiSuccess, setMidiSuccess] = React.useState<boolean>();
+  const [midiSuccess, setMidiSuccess] = useState<boolean>();
   const noteRef = useRef([...Array(127).fill(false)]);
-  const [tick, setTick] = React.useState(false);
+  const [tick, setTick] = useState(false);
   const activeNotes = noteRef.current;
   useEffect(() => {
     navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
@@ -71,9 +71,6 @@ const View = () => {
           const [midiCmd, noteID, velocity] = message.data;
           if (midiCmd === 144 && velocity > 0) {
             activeNotes[noteID] = true;
-            // const notes = [...activeNotes];
-            // notes[noteID] = true;
-            // setActiveNotes(notes);
             setTick(!tick);
           } else if (midiCmd === 128 || velocity === 0) {
             activeNotes[noteID] = false;
@@ -84,7 +81,7 @@ const View = () => {
     }
   });
 
-  const [target, setTarget] = React.useState<number>();
+  const [target, setTarget] = useState<number>();
 
   const activeNotesReal = noteUtils.extractNotes(activeNotes);
 

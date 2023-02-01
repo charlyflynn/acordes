@@ -18,13 +18,14 @@ const noteNames2 = [
 ];
 
 export const convertMidiIdToNote = (midiId: tMidiId) => {
-  const octave = Math.trunc(midiId / 12);
+  const octave = Math.trunc(midiId / 12) - 1;
   const noteName = noteNames[midiId % 12];
 
   return typeof midiId === "number" ? `${noteName}${octave}` : "n/a";
 };
 
 export const convertMidiIdToNoteName = (midiId: tMidiId) => {
+  1;
   return typeof midiId === "number" ? noteNames2[midiId % 12][0] : "";
 };
 
