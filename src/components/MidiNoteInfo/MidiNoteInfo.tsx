@@ -1,11 +1,10 @@
 import { detect } from "@tonaljs/chord-detect";
 import { KeyValueTable } from "components";
-import React from "react";
 import { noteUtils } from "utils";
 
 interface PropTypes {
   activeNotes: boolean[];
-  activeNotesReal: string[];
+  activeNotesReal: number[];
   target: number;
 }
 
@@ -21,9 +20,7 @@ const MidiNoteInfo = ({ activeNotes, activeNotesReal, target }: PropTypes) => {
       key: "Selected Notes",
       value:
         activeNotesReal.length > 0
-          ? activeNotesReal
-              .map((item) => noteUtils.convertMidiIdToNote(item))
-              .toString()
+          ? activeNotesReal.map((item) => noteUtils.convertMidiIdToNote(item)).toString()
           : "n/a",
     },
     {
@@ -41,18 +38,14 @@ const MidiNoteInfo = ({ activeNotes, activeNotesReal, target }: PropTypes) => {
       key: "Intervallic Distances",
       value:
         activeNotesReal.length > 1
-          ? noteUtils
-              .extractDistances(noteUtils.extractNotes(activeNotes))
-              .toString()
+          ? noteUtils.extractDistances(noteUtils.extractNotes(activeNotes)).toString()
           : "n/a",
     },
     {
       key: "Root Note",
       value:
         activeNotesReal.length > 0
-          ? noteUtils.convertMidiIdToNote(
-              noteUtils.extractRoot(activeNotesReal)[0]
-            )
+          ? noteUtils.convertMidiIdToNote(noteUtils.extractRoot(activeNotesReal).root)
           : "n/a",
     },
   ];

@@ -1,17 +1,6 @@
-const noteNames = [
-  "C",
-  "C#/Db",
-  "D",
-  "D#/Eb",
-  "E",
-  "F",
-  "F#/Gb",
-  "G",
-  "G#/Ab",
-  "A",
-  "A#/Bb",
-  "B",
-];
+import { tMidiId, tNoteIndices, tNoteArray } from "./types";
+
+const noteNames = ["C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B"];
 
 const noteNames2 = [
   ["C"],
@@ -27,10 +16,6 @@ const noteNames2 = [
   ["A#", "Bb"],
   ["B"],
 ];
-
-type tMidiId = number;
-type tNoteArray = boolean[];
-type tNoteIndices = number[];
 
 export const convertMidiIdToNote = (midiId: tMidiId) => {
   const octave = Math.trunc(midiId / 12);
@@ -53,7 +38,8 @@ export const extractNotes = (noteArray: tNoteArray) => {
 };
 
 export const extractRoot = (noteIndices: tNoteIndices) => {
-  return [noteIndices[0], noteIndices.slice(1, noteIndices.length)];
+  // return [noteIndices[0], noteIndices.slice(1, noteIndices.length)];
+  return { root: noteIndices[0], else: noteIndices.slice(1, noteIndices.length) };
 };
 
 export const extractDistances = (noteIndices: tNoteIndices) =>

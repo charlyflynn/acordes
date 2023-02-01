@@ -11,13 +11,12 @@ test("extract active notes to an array of midi note IDs", () => {
 });
 
 test("extract root notes by selecting lowest from MIDI note indice array", () => {
-  expect(
-    noteUtils.extractRoot(noteUtils.extractNotes(activeNotes))
-  ).toStrictEqual([40, [45, 49]]);
+  expect(noteUtils.extractRoot(noteUtils.extractNotes(activeNotes))).toStrictEqual({
+    root: 40,
+    else: [45, 49],
+  });
 });
 
 test("extract intervallic distances in semitones from MIDI note indice array", () => {
-  expect(
-    noteUtils.extractDistances(noteUtils.extractNotes(activeNotes))
-  ).toStrictEqual([5, 4]);
+  expect(noteUtils.extractDistances(noteUtils.extractNotes(activeNotes))).toStrictEqual([5, 4]);
 });
