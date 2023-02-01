@@ -28,19 +28,23 @@ const noteNames2 = [
   ["B"],
 ];
 
-export const convertMidiIdToNote = (midiId) => {
+type tMidiId = number;
+type tNoteArray = boolean[];
+type tNoteIndices = number[];
+
+export const convertMidiIdToNote = (midiId: tMidiId) => {
   const octave = Math.trunc(midiId / 12);
   const noteName = noteNames[midiId % 12];
 
   return typeof midiId === "number" ? `${noteName}${octave}` : "n/a";
 };
 
-export const convertMidiIdToNoteName = (midiId) => {
+export const convertMidiIdToNoteName = (midiId: tMidiId) => {
   return typeof midiId === "number" ? noteNames2[midiId % 12][0] : "";
 };
 
-export const extractNotes = (noteArray) => {
-  const noteIndices = [];
+export const extractNotes = (noteArray: tNoteArray) => {
+  const noteIndices: tNoteIndices = [];
   noteArray.forEach((value, i) => {
     if (value) noteIndices.push(i);
   });
@@ -48,13 +52,13 @@ export const extractNotes = (noteArray) => {
   return noteIndices;
 };
 
-export const extractRoot = (noteIndices) => {
+export const extractRoot = (noteIndices: tNoteIndices) => {
   return [noteIndices[0], noteIndices.slice(1, noteIndices.length)];
 };
 
-export const extractDistances = (noteIndices) =>
+export const extractDistances = (noteIndices: tNoteIndices) =>
   noteIndices.length > 0
     ? Array(noteIndices.length - 1)
-        .fill()
+        .fill(null)
         .map((_, i) => noteIndices[i + 1] - noteIndices[i])
     : [];
