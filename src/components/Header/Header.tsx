@@ -13,11 +13,11 @@ const StyledHeader = styled.div`
 `;
 
 interface PropTypes {
-  midiState: boolean;
+  midiSuccess?: boolean;
   settings: any;
 }
 
-const Header = ({ midiState, settings }: PropTypes) => {
+const Header = ({ midiSuccess, settings }: PropTypes) => {
   const settingsDisplay = Object.entries(settings).map((item: any) => ({
     key: item[1].displayName,
     value: item[1].value,
@@ -26,8 +26,8 @@ const Header = ({ midiState, settings }: PropTypes) => {
   return (
     <StyledHeader>
       <VerticalStack>
-        <Text color={midiState ? "lightgreen" : "goldenrod"}>
-          {midiState ? "MIDI device connected" : "MIDI device not found"}
+        <Text color={midiSuccess ? "lightgreen" : "goldenrod"}>
+          {midiSuccess ? "MIDI device connected" : "MIDI device not found"}
         </Text>
         <Text>{false && "no devices"}</Text>
       </VerticalStack>

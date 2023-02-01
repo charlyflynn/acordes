@@ -5,13 +5,13 @@ import { noteUtils } from "utils";
 interface PropTypes {
   activeNotes: boolean[];
   activeNotesReal: number[];
-  target: number;
+  target?: number;
 }
 
 const MidiNoteInfo = ({ activeNotes, activeNotesReal, target }: PropTypes) => {
   const infoData = [
     { key: "Target Midi Id", value: target },
-    { key: "Target Note", value: noteUtils.convertMidiIdToNote(target) },
+    { key: "Target Note", value: target ? noteUtils.convertMidiIdToNote(target) : "n/a" },
     {
       key: "Selected Notes (Midi)",
       value: activeNotesReal.length > 0 ? activeNotesReal.toString() : "n/a",

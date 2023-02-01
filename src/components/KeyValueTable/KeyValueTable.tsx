@@ -29,7 +29,7 @@ const Column = styled.div`
 interface PropTypes {
   data: {
     key: string;
-    value: string | number;
+    value: string | number | undefined;
   }[];
 }
 

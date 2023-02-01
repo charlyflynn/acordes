@@ -44,15 +44,19 @@ const activeNotesDefault = [...Array(127).fill(false)];
 const View = () => {
   const [activeNotes, setActiveNotes] = React.useState(activeNotesDefault);
   const [startingOctave] = React.useState(3);
-  const [midiSuccess, setMidiSuccess] = React.useState(undefined);
-
-  const midi = useRef({});
   const [totalOctaves] = React.useState(3);
 
-  const onMIDISuccess = (access) => {
+  const midi = useRef<WebMidi.MIDIAccess>();
+  const [midiSuccess, setMidiSuccess] = React.useState<boolean>();
+
+  useEffect(() => {
+    navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
+  }, []);
+
+  const onMIDISuccess = (access: WebMidi.MIDIAccess) => {
     midi.current = access;
-    if (midi.current.inputs.size > 0) setMidiSuccess(true);
-    if (midi.current.inputs.size === 0) setMidiSuccess(false);
+    if (access.inputs.size > 0) setMidiSuccess(true);
+    if (access.inputs.size === 0) setMidiSuccess(false);
   };
 
   const onMIDIFailure = () => {
@@ -62,11 +66,7 @@ const View = () => {
   };
 
   useEffect(() => {
-    navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
-  }, []);
-
-  useEffect(() => {
-    if (midiSuccess) {
+    if (midiSuccess && midi.current) {
       midi.current.inputs.forEach((input) => {
         input.onmidimessage = (message) => {
           const [midiCmd, noteID, velocity] = message.data;
@@ -84,7 +84,7 @@ const View = () => {
     }
   });
 
-  const [target, setTarget] = React.useState("n/a");
+  const [target, setTarget] = React.useState<number>();
 
   const activeNotesReal = noteUtils.extractNotes(activeNotes);
 
@@ -92,7 +92,7 @@ const View = () => {
     <Container>
       {isDesktop ? (
         <>
-          <Header midiState={midiSuccess} settings={settings} />
+          <Header midiSuccess={midiSuccess} settings={settings} />
           <ContentContainer>
             <VerticalStack>
               <InfoContainer>
@@ -107,7 +107,6 @@ const View = () => {
                       : []
                   }
                 />
-
                 <MidiNoteInfo
                   activeNotes={activeNotes}
                   activeNotesReal={activeNotesReal}

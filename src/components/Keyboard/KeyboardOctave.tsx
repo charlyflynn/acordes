@@ -27,11 +27,9 @@ const Key = styled.div<KeyPropTypes>`
   box-sizing: border-box;
 
   //key color
-  background-color: ${({ type, active }) =>
-    active ? "goldenrod" : type ? "black" : "ivory"};
+  background-color: ${({ type, active }) => (active ? "goldenrod" : type ? "black" : "ivory")};
   :hover {
-    background-color: ${({ active }) =>
-      active ? "grey" : "hsl(43, 74%, 80%)"};
+    background-color: ${({ active }) => (active ? "grey" : "hsl(43, 74%, 80%)")};
   }
 
   // black/white key construction
@@ -55,16 +53,12 @@ const Keybed = styled.div`
 `;
 
 interface KeyboardOctavePropTypes {
-  setTarget: React.Dispatch<React.SetStateAction<number | string>>;
+  setTarget: React.Dispatch<React.SetStateAction<number | undefined>>;
   activeNotes: boolean[];
   octave: number;
 }
 
-const KeyboardOctave = ({
-  setTarget,
-  activeNotes,
-  octave,
-}: KeyboardOctavePropTypes) => {
+const KeyboardOctave = ({ setTarget, activeNotes, octave }: KeyboardOctavePropTypes) => {
   const keyArray = [...Array(12).keys()].map((octaveIndex) => {
     const absIndex = octave * 12 + octaveIndex;
     const type = keyPattern[octaveIndex];
@@ -79,7 +73,7 @@ const KeyboardOctave = ({
           activeNotes[absIndex] = !activeNotes[absIndex];
         }}
         onMouseOver={() => setTarget(absIndex)}
-        onMouseOut={() => setTarget("n/a")}
+        onMouseOut={() => setTarget(undefined)}
       />
     );
   });

@@ -11,17 +11,12 @@ const KeyboardStyled = styled.div`
 `;
 
 interface PropTypes {
-  setTarget: React.Dispatch<React.SetStateAction<number | string>>;
+  setTarget: React.Dispatch<React.SetStateAction<number | undefined>>;
   activeNotes: boolean[];
   startingOctave: number;
   totalOctaves: number;
 }
-const Keyboard = ({
-  setTarget,
-  activeNotes,
-  startingOctave,
-  totalOctaves,
-}: PropTypes) => {
+const Keyboard = ({ setTarget, activeNotes, startingOctave, totalOctaves }: PropTypes) => {
   return (
     <KeyboardStyled>
       {[...Array(totalOctaves).keys()].map((_, i) => (
