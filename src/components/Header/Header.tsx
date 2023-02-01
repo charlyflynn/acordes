@@ -27,9 +27,7 @@ const Header = ({ midiState, settings }: PropTypes) => {
     <StyledHeader>
       <VerticalStack>
         <Text color={midiState ? "lightgreen" : "goldenrod"}>
-          {midiState
-            ? "external devices connected:"
-            : "external device not found"}
+          {midiState ? "MIDI device connected" : "MIDI device not found"}
         </Text>
         <Text>{false && "no devices"}</Text>
       </VerticalStack>

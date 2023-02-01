@@ -1,3 +1,4 @@
+import React, { useRef, useEffect } from "react";
 import { detect } from "@tonaljs/chord-detect";
 import {
   ChordReadout,
@@ -7,7 +8,6 @@ import {
   MidiNoteInfo,
   VerticalStack,
 } from "components";
-import React from "react";
 import { isDesktop } from "react-device-detect";
 import styled from "styled-components";
 import { noteUtils } from "utils";
@@ -42,50 +42,49 @@ const ContentContainer = styled.div`
 const activeNotesDefault = [...Array(127).fill(false)];
 
 const View = () => {
-  const [activeNotes, setactiveNotes] = React.useState(activeNotesDefault);
+  const [activeNotes, setActiveNotes] = React.useState(activeNotesDefault);
   const [startingOctave] = React.useState(3);
-  const [totalOctaves] = React.useState(3);
-  const onMIDISuccess = (access) => {
-    if (access.inputs.size > 0) setmidiState(true);
-    else setmidiState(false);
+  const [midiSuccess, setMidiSuccess] = React.useState(undefined);
 
-    for (var input of access.inputs.values())
-      input.onmidimessage = (midiMessage) => {
-        getMIDIMessage(midiMessage);
-      };
+  const midi = useRef({});
+  const [totalOctaves] = React.useState(3);
+
+  const onMIDISuccess = (access) => {
+    midi.current = access;
+    if (midi.current.inputs.size > 0) setMidiSuccess(true);
+    if (midi.current.inputs.size === 0) setMidiSuccess(false);
   };
 
   const onMIDIFailure = () => {
+    setMidiSuccess(false);
     window.alert("Midi access failure");
     console.log("Midi access failure");
   };
 
-  const getMIDIMessage = (midiMessage, currentNotes) => {
-    const [midiCmd, noteID, velocity] = midiMessage.data;
-    if (midiCmd === 144 && velocity > 0) {
-      setactiveNotes([
-        ...activeNotes.slice(0, noteID),
-        true,
-        ...activeNotes.slice(noteID, activeNotes.length),
-      ]);
-      // activeNotes.current[noteID] = true;
-    } else if (midiCmd === 128 || velocity === 0) {
-      setactiveNotes([
-        ...activeNotes.slice(0, noteID),
-        false,
-        ...activeNotes.slice(noteID, activeNotes.length),
-      ]);
-    }
-  };
-
-  React.useEffect(() => {
+  useEffect(() => {
     navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [target, setTarget] = React.useState("n/a");
+  useEffect(() => {
+    if (midiSuccess) {
+      midi.current.inputs.forEach((input) => {
+        input.onmidimessage = (message) => {
+          const [midiCmd, noteID, velocity] = message.data;
+          if (midiCmd === 144 && velocity > 0) {
+            const notes = [...activeNotes];
+            notes[noteID] = true;
+            setActiveNotes(notes);
+          } else if (midiCmd === 128 || velocity === 0) {
+            const notes = [...activeNotes];
+            notes[noteID] = false;
+            setActiveNotes(notes);
+          }
+        };
+      });
+    }
+  });
 
-  const [midiState, setmidiState] = React.useState(false);
+  const [target, setTarget] = React.useState("n/a");
 
   const activeNotesReal = noteUtils.extractNotes(activeNotes);
 
@@ -93,7 +92,7 @@ const View = () => {
     <Container>
       {isDesktop ? (
         <>
-          <Header midiState={midiState} settings={settings} />
+          <Header midiState={midiSuccess} settings={settings} />
           <ContentContainer>
             <VerticalStack>
               <InfoContainer>
