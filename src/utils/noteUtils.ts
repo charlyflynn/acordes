@@ -39,7 +39,6 @@ export const extractNotes = (noteArray: tNoteArray) => {
 };
 
 export const extractRoot = (noteIndices: tNoteIndices) => {
-  // return [noteIndices[0], noteIndices.slice(1, noteIndices.length)];
   return { root: noteIndices[0], else: noteIndices.slice(1, noteIndices.length) };
 };
 

@@ -35,7 +35,7 @@ const ContentContainer = styled.div`
 `;
 
 const View = () => {
-  const [startingOctave] = useState(0);
+  const [startingOctave] = useState(1);
   const [totalOctaves] = useState(8);
 
   const settings = {

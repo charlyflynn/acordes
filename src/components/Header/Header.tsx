@@ -31,7 +31,7 @@ const Header = ({ midiSuccess, settings }: PropTypes) => {
         </Text>
         <Text>{false && "no devices"}</Text>
       </VerticalStack>
-      <KeyValueTable data={settingsData} />
+      {null && <KeyValueTable data={settingsData} />}
     </StyledHeader>
   );
 };
