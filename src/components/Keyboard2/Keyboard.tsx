@@ -39,7 +39,7 @@ const Container = styled.div`
 `;
 
 const Keybed = styled.div<{ width: number }>`
-  position: absolute;
+  position: relative;
   height: 170px;
   width: ${({ width }) => `${width}px`};
 `;
