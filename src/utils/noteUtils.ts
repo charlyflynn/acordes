@@ -29,6 +29,14 @@ export const convertMidiIdToNoteName = (midiId: tMidiId) => {
   return typeof midiId === "number" ? noteNames2[midiId % 12][0] : "";
 };
 
+export const determineOctavefromMidiIndex = (midiIndex: number) => Math.floor(midiIndex / 12) - 1;
+
+export const determineNoteNamefromMidiIndex = (midiIndex: number) =>
+  noteNames2[midiIndex % 12][0].toString();
+
+export const convertMidiIndexToNoteName = (midiIndex: number) =>
+  `${determineNoteNamefromMidiIndex(midiIndex)}${determineOctavefromMidiIndex(midiIndex)}`;
+
 export const extractNotes = (noteArray: tNoteArray) => {
   const noteIndices: tNoteIndices = [];
   noteArray.forEach((value, i) => {

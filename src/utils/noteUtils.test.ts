@@ -20,3 +20,10 @@ test("extract root notes by selecting lowest from MIDI note indice array", () =>
 test("extract intervallic distances in semitones from MIDI note indice array", () => {
   expect(noteUtils.extractDistances(noteUtils.extractNotes(activeNotes))).toStrictEqual([5, 4]);
 });
+
+test("correctly identifies conventional octave", () => {
+  expect(noteUtils.determineOctavefromMidiIndex(11)).toBe(-1);
+  expect(noteUtils.determineOctavefromMidiIndex(12)).toBe(0);
+  expect(noteUtils.determineOctavefromMidiIndex(22)).toBe(0);
+  expect(noteUtils.determineOctavefromMidiIndex(24)).toBe(1);
+});
