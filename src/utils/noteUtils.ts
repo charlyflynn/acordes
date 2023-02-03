@@ -1,4 +1,6 @@
 import { tMidiId, tNoteIndices, tNoteArray } from "./types";
+import { detect } from "@tonaljs/chord-detect";
+import { noteUtils } from "utils";
 
 const noteNames = ["C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B"];
 
@@ -55,4 +57,13 @@ export const extractDistances = (noteIndices: tNoteIndices) =>
     ? Array(noteIndices.length - 1)
         .fill(null)
         .map((_, i) => noteIndices[i + 1] - noteIndices[i])
+    : [];
+
+export const detectChord = (activeNotes: number[]) =>
+  activeNotes.length > 2
+    ? detect(
+        activeNotes.map((item) => {
+          return noteUtils.convertMidiIdToNoteName(item);
+        })
+      )
     : [];

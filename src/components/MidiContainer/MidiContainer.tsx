@@ -1,5 +1,4 @@
 import { useRef, useEffect, useState } from "react";
-import { detect } from "@tonaljs/chord-detect";
 import {
   ChordReadout,
   DesktopOnly,
@@ -94,17 +93,7 @@ const View = () => {
           <ContentContainer>
             <VerticalStack>
               <InfoContainer>
-                <ChordReadout
-                  chords={
-                    activeNotesReal.length > 2
-                      ? detect(
-                          activeNotesReal.map((item) => {
-                            return noteUtils.convertMidiIdToNoteName(item);
-                          })
-                        )
-                      : []
-                  }
-                />
+                <ChordReadout chords={noteUtils.detectChord(activeNotesReal)} />
                 <MidiNoteInfo
                   activeNotes={activeNotes}
                   activeNotesReal={activeNotesReal}
