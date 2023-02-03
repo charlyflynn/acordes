@@ -5,6 +5,7 @@ import {
   DesktopOnly,
   Header,
   Keyboard,
+  Keyboard2,
   MidiNoteInfo,
   VerticalStack,
 } from "components";
@@ -110,13 +111,16 @@ const View = () => {
                   target={target}
                 />
               </InfoContainer>
+              <Keyboard2 setTarget={setTarget} activeNotes={activeNotes} />
             </VerticalStack>
-            <Keyboard
-              setTarget={setTarget}
-              activeNotes={activeNotes}
-              startingOctave={startingOctave}
-              totalOctaves={totalOctaves}
-            />
+            {false && (
+              <Keyboard
+                setTarget={setTarget}
+                activeNotes={activeNotes}
+                startingOctave={startingOctave}
+                totalOctaves={totalOctaves}
+              />
+            )}
           </ContentContainer>
         </>
       ) : (
