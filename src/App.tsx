@@ -1,11 +1,8 @@
-import { MidiContainer } from "components";
+import { MainPage, DesktopOnly } from "components";
+import { isDesktop } from "react-device-detect";
 
 function App() {
-  return (
-    <div className="App">
-      <MidiContainer />
-    </div>
-  );
+  return isDesktop ? <MainPage /> : <DesktopOnly />;
 }
 
 export default App;

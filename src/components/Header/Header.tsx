@@ -1,4 +1,4 @@
-import { KeyValueTable, Text, VerticalStack } from "components";
+import { Text, VerticalStack } from "components";
 import styled from "styled-components";
 
 const StyledHeader = styled.div`
@@ -14,15 +14,9 @@ const StyledHeader = styled.div`
 
 interface PropTypes {
   midiSuccess?: boolean;
-  settings: any;
 }
 
-const Header = ({ midiSuccess, settings }: PropTypes) => {
-  const settingsData = Object.entries(settings).map((item: any) => ({
-    key: item[1].displayName,
-    value: item[1].value,
-  }));
-
+const Header = ({ midiSuccess }: PropTypes) => {
   return (
     <StyledHeader>
       <VerticalStack>
@@ -31,7 +25,6 @@ const Header = ({ midiSuccess, settings }: PropTypes) => {
         </Text>
         <Text>{false && "no devices"}</Text>
       </VerticalStack>
-      {null && <KeyValueTable data={settingsData} />}
     </StyledHeader>
   );
 };

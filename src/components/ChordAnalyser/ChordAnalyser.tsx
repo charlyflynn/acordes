@@ -1,14 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import {
-  ChordReadout,
-  DesktopOnly,
-  Header,
-  Keyboard,
-  Keyboard2,
-  MidiNoteInfo,
-  VerticalStack,
-} from "components";
-import { isDesktop } from "react-device-detect";
+import { ChordReadout, Keyboard, Keyboard2, MidiNoteInfo, VerticalStack } from "components";
 import styled from "styled-components";
 import { noteUtils } from "utils";
 
@@ -37,11 +28,6 @@ const ContentContainer = styled.div`
 const View = () => {
   const [startingOctave] = useState(1);
   const [totalOctaves] = useState(8);
-
-  const settings = {
-    startingOctave: { displayName: "Starting Octave", value: startingOctave },
-    totalOctaves: { displayName: "Total Octaves", value: totalOctaves },
-  };
 
   const midi = useRef<WebMidi.MIDIAccess>();
   const [midiSuccess, setMidiSuccess] = useState<boolean>();
@@ -86,36 +72,27 @@ const View = () => {
   const activeNotesReal = noteUtils.extractNotes(activeNotes);
 
   return (
-    <Container>
-      {isDesktop ? (
-        <>
-          <Header midiSuccess={midiSuccess} settings={settings} />
-          <ContentContainer>
-            <VerticalStack>
-              <InfoContainer>
-                <ChordReadout chords={noteUtils.detectChord(activeNotesReal)} />
-                <MidiNoteInfo
-                  activeNotes={activeNotes}
-                  activeNotesReal={activeNotesReal}
-                  target={target}
-                />
-              </InfoContainer>
-              <Keyboard2 setTarget={setTarget} activeNotes={activeNotes} />
-            </VerticalStack>
-            {false && (
-              <Keyboard
-                setTarget={setTarget}
-                activeNotes={activeNotes}
-                startingOctave={startingOctave}
-                totalOctaves={totalOctaves}
-              />
-            )}
-          </ContentContainer>
-        </>
-      ) : (
-        <DesktopOnly />
+    <ContentContainer>
+      <VerticalStack>
+        <InfoContainer>
+          <ChordReadout chords={noteUtils.detectChord(activeNotesReal)} />
+          <MidiNoteInfo
+            activeNotes={activeNotes}
+            activeNotesReal={activeNotesReal}
+            target={target}
+          />
+        </InfoContainer>
+        <Keyboard2 setTarget={setTarget} activeNotes={activeNotes} />
+      </VerticalStack>
+      {false && (
+        <Keyboard
+          setTarget={setTarget}
+          activeNotes={activeNotes}
+          startingOctave={startingOctave}
+          totalOctaves={totalOctaves}
+        />
       )}
-    </Container>
+    </ContentContainer>
   );
 };
 
