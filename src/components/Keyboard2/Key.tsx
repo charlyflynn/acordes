@@ -56,9 +56,19 @@ interface iKey {
   type: number;
   noteName: string;
   whiteKeyWidth: number;
+  c4Ref?: React.Ref<HTMLDivElement>;
 }
 
-function Key({ setTarget, activeNotes, midiIndex, offset, type, noteName, whiteKeyWidth }: iKey) {
+function Key({
+  setTarget,
+  activeNotes,
+  midiIndex,
+  offset,
+  type,
+  noteName,
+  whiteKeyWidth,
+  c4Ref,
+}: iKey) {
   const dimensions = {
     whiteKeyWidth,
     blackKeyWidth: whiteKeyWidth * 0.6,
@@ -66,8 +76,10 @@ function Key({ setTarget, activeNotes, midiIndex, offset, type, noteName, whiteK
     slotWidth: whiteKeyWidth / 2,
     blackKeyHeight: whiteKeyWidth * 3.4 * 0.6,
   };
+
   return (
     <StyledKey
+      ref={noteName === "C4" ? c4Ref : undefined}
       midiIndex={midiIndex}
       type={type}
       offset={offset}

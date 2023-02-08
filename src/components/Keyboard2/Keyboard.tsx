@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import styled from "styled-components";
 import { noteUtils } from "utils";
 import Key from "./Key";
@@ -57,9 +57,21 @@ const Keyboard = ({ setTarget, activeNotes }: iKeyboard) => {
     noteName: noteUtils.convertMidiIndexToNoteName(midiIndex),
   }));
   const truncatedKeyData = keyData.slice(pianoRange[0], pianoRange[1]);
+
+  const c4Ref = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    c4Ref.current!.scrollIntoView({
+      behavior: "auto",
+      block: "center",
+      inline: "center",
+    });
+  }, []);
+
   const keyElements = truncatedKeyData.map(({ midiIndex, noteName, blackKey, offset }) => {
     return (
       <Key
+        c4Ref={noteName === "C4" ? c4Ref : undefined}
         key={noteName}
         noteName={noteName}
         activeNotes={activeNotes}
